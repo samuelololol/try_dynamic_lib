@@ -1,5 +1,6 @@
 #CXX = clang 
 CC=gcc
+CFLAGS=-ggdb -Wall 
 CXX=g++
 CXXFLAGES=-ggdb -std=c++11 -Wall -lstdc++
 SRCS=
@@ -10,13 +11,13 @@ TARGET=out
 PHONY=all lib cobj runc runpy clean
 
 all: lib cobj
-	$(CC) test.o -L. -lhello -o test
+	$(CC) $(CFLAGS) test.o -L. -lhello -o test
 
 lib: hello.c hello.h
-	$(CC) hello.c -fPIC -shared -o libhello.so
+	$(CC) $(CFLAGS) hello.c -fPIC -shared -o libhello.so
 
 cobj: test.c
-	$(CC) -c test.c -o test.o
+	$(CC) $(CFLAGS) -c test.c -o test.o
 
 runc: all
 	env LD_LIBRARY_PATH=. ./test
