@@ -7,7 +7,7 @@ import os
 import ctypes
 from ctypes.util import find_library
 from ctypes import (
-        c_int, c_void_p
+        c_int, c_void_p, c_char_p,
         )
 
 libhello_path = os.environ.get('LIBHELLO') or find_library('hello')
@@ -35,10 +35,13 @@ def ffi(name, argtypes, restype, errcheck=None):
 
 ffi('test_v', [], c_void_p, None)
 ffi('test_i', [], c_int, check_int)
+ffi('test_cp', [c_char_p], c_int, check_int)
 
 def main():
+    s = '1234567890'
     print test_i()
     test_v()
+    test_cp(s)
 
 if __name__ == '__main__':
     main()
